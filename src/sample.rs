@@ -22,7 +22,8 @@ enum Lib {
     Intaglio,
     IntaglioDyn,
     Cargo,
-    Strena,
+    StrenaNew,
+    StrenaWithCapacity,
 }
 
 impl Sample {
@@ -36,7 +37,8 @@ impl Sample {
             Lib::Intaglio => self.intaglio_collect_words(),
             Lib::IntaglioDyn => self.intaglio_dyn_collect_words(),
             Lib::Cargo => self.cargo_collect_words(),
-            Lib::Strena => self.strena_collect_words(),
+            Lib::StrenaNew => self.strena_new_collect_words(),
+            Lib::StrenaWithCapacity => self.strena_with_capacity_collect_words(),
         }
     }
 
@@ -136,7 +138,19 @@ impl Sample {
         println!("Loaded {} words", WORDS.len());
     }
 
-    fn strena_collect_words(&self) {
+    fn strena_new_collect_words(&self) {
+        crate::ALLOCATOR.set_active(true);
+        let mut words = strena::Interner::new();
+        crate::ALLOCATOR.mark_point();
+        for &word in WORDS {
+            words.get_or_insert(word);
+            crate::ALLOCATOR.mark_point();
+        }
+        crate::ALLOCATOR.set_active(false);
+        println!("Loaded {} words", words.len());
+    }
+
+    fn strena_with_capacity_collect_words(&self) {
         crate::ALLOCATOR.set_active(true);
         let mut words = strena::Interner::with_capacity(strena::Capacity {
             symbols: WORDS.len(),
