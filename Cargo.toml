@@ -16,7 +16,7 @@ bytesize = "1.0.1"
 textplots = "0.5.1"
 parse-display = "0.1.2"
 
-string-interner = "0.11"
+string-interner = "0.12"
 lasso = "0.3"
 lalrpop-intern = "0.15"
 intaglio = "1.1"
