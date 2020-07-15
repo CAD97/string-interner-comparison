@@ -1310,11 +1310,12 @@ dependencies = [
 
 [[package]]
 name = "string-interner"
-version = "0.10.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4b5c83c9c68c1441079c6813dbc7aef48be63b163fea02f074db242cd91f48c5"
+checksum = "a3354fc69125aba1f70fed5365f870d5b9bd2f41ec015232082abd4ce9ab795c"
 dependencies = [
  "cfg-if",
+ "hashbrown",
  "serde",
 ]
 
@@ -1356,9 +1357,9 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "syn"
-version = "1.0.33"
+version = "1.0.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8d5d96e8cbb005d6959f119f773bfaebb5684296108fb32600c00cde305b2cd"
+checksum = "936cae2873c940d92e697597c5eee105fb570cd5689c695806f672883653349b"
 dependencies = [
  "proc-macro2",
  "quote",
