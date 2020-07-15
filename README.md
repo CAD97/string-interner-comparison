@@ -18,7 +18,8 @@ Possible values for `<lib>` are:
 - `intaglio`: Testing the [`intaglio`](https://crates.io/crates/intaglio) crate.
     - `intanglio_dyn`: Use this to prevent `intanglio` to optimize for `&'static str`.
 - `cargo`: Testing [`cargo`](https://crates.io/crates/cargo)'s internal string interner.
-- `strena`: Testing [`strena`](https://github.com/CAD97/strena) research project.
+- `strena_new`: Testing [`strena`](https://github.com/CAD97/strena) research project.
+    - Use `strena_with_capacity` for best possible memory consumption.
 
 ### To collect allocation event stats
 
