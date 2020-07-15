@@ -15,6 +15,7 @@ pub struct Sample {
 #[display(style = "snake_case")]
 enum Lib {
     Std,
+    Interner,
     InternerBucket,
     InternerString,
     Lasso,
@@ -22,6 +23,7 @@ enum Lib {
     Intaglio,
     IntaglioDyn,
     Cargo,
+    Strena,
     StrenaNew,
     StrenaWithCapacity,
 }
@@ -30,6 +32,7 @@ impl Sample {
     pub fn run(self) {
         match self.lib {
             Lib::Std => self.std_collect_words(),
+            Lib::Interner |
             Lib::InternerBucket => self.interner_bucket_collect_words(),
             Lib::InternerString => self.interner_string_collect_words(),
             Lib::Lasso => self.lasso_collect_words(),
@@ -37,6 +40,7 @@ impl Sample {
             Lib::Intaglio => self.intaglio_collect_words(),
             Lib::IntaglioDyn => self.intaglio_dyn_collect_words(),
             Lib::Cargo => self.cargo_collect_words(),
+            Lib::Strena |
             Lib::StrenaNew => self.strena_new_collect_words(),
             Lib::StrenaWithCapacity => self.strena_with_capacity_collect_words(),
         }
