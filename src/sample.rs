@@ -15,7 +15,8 @@ pub struct Sample {
 #[display(style = "snake_case")]
 enum Lib {
     Std,
-    Interner,
+    InternerBucket,
+    InternerString,
     Lasso,
     Lalrpop,
     Intaglio,
@@ -28,7 +29,8 @@ impl Sample {
     pub fn run(self) {
         match self.lib {
             Lib::Std => self.std_collect_words(),
-            Lib::Interner => self.interner_collect_words(),
+            Lib::InternerBucket => self.interner_bucket_collect_words(),
+            Lib::InternerString => self.interner_string_collect_words(),
             Lib::Lasso => self.lasso_collect_words(),
             Lib::Lalrpop => self.lalrpop_collect_words(),
             Lib::Intaglio => self.intaglio_collect_words(),
@@ -50,9 +52,22 @@ impl Sample {
         println!("Loaded {} words", words.len());
     }
 
-    fn interner_collect_words(&self) {
+    fn interner_bucket_collect_words(&self) {
         crate::ALLOCATOR.set_active(true);
         let mut words = string_interner::StringInterner::default();
+        crate::ALLOCATOR.mark_point();
+        for &word in WORDS {
+            words.get_or_intern(word);
+            crate::ALLOCATOR.mark_point();
+        }
+        crate::ALLOCATOR.set_active(false);
+        println!("Loaded {} words", words.len());
+    }
+
+    fn interner_string_collect_words(&self) {
+        use string_interner::{StringInterner, DefaultSymbol, backend::StringBackend};
+        crate::ALLOCATOR.set_active(true);
+        let mut words = <StringInterner<DefaultSymbol, StringBackend<DefaultSymbol>>>::new();
         crate::ALLOCATOR.mark_point();
         for &word in WORDS {
             words.get_or_intern(word);
