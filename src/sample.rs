@@ -18,6 +18,7 @@ enum Lib {
     Interner,
     InternerBucket,
     InternerString,
+    InternerBuffer,
     Lasso,
     Lalrpop,
     Intaglio,
@@ -35,6 +36,7 @@ impl Sample {
             Lib::Interner |
             Lib::InternerBucket => self.interner_bucket_collect_words(),
             Lib::InternerString => self.interner_string_collect_words(),
+            Lib::InternerBuffer => self.interner_buffer_collect_words(),
             Lib::Lasso => self.lasso_collect_words(),
             Lib::Lalrpop => self.lalrpop_collect_words(),
             Lib::Intaglio => self.intaglio_collect_words(),
@@ -59,6 +61,19 @@ impl Sample {
     }
 
     fn interner_bucket_collect_words(&self) {
+        use string_interner::{StringInterner, backend::BucketBackend};
+        crate::ALLOCATOR.set_active(true);
+        let mut words = <StringInterner<BucketBackend>>::new();
+        crate::ALLOCATOR.mark_point();
+        for &word in WORDS {
+            words.get_or_intern(word);
+            crate::ALLOCATOR.mark_point();
+        }
+        crate::ALLOCATOR.set_active(false);
+        println!("Loaded {} words", words.len());
+    }
+
+    fn interner_string_collect_words(&self) {
         crate::ALLOCATOR.set_active(true);
         let mut words = string_interner::StringInterner::default();
         crate::ALLOCATOR.mark_point();
@@ -70,10 +85,10 @@ impl Sample {
         println!("Loaded {} words", words.len());
     }
 
-    fn interner_string_collect_words(&self) {
-        use string_interner::{StringInterner, DefaultSymbol, backend::StringBackend};
+    fn interner_buffer_collect_words(&self) {
+        use string_interner::{StringInterner, backend::BufferBackend};
         crate::ALLOCATOR.set_active(true);
-        let mut words = <StringInterner<DefaultSymbol, StringBackend<DefaultSymbol>>>::new();
+        let mut words = <StringInterner<BufferBackend>>::new();
         crate::ALLOCATOR.mark_point();
         for &word in WORDS {
             words.get_or_intern(word);
@@ -135,7 +150,7 @@ impl Sample {
         crate::ALLOCATOR.set_active(true);
         crate::ALLOCATOR.mark_point();
         for &word in WORDS {
-            cargo::core::InternedString::new(word);
+            cargo::util::interning::InternedString::new(word);
             crate::ALLOCATOR.mark_point();
         }
         crate::ALLOCATOR.set_active(false);

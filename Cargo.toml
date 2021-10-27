@@ -16,12 +16,12 @@ bytesize = "1.0.1"
 textplots = "0.5.1"
 parse-display = "0.1.2"
 
-string-interner = "0.12"
-lasso = "0.3"
+string-interner = "0.14"
+lasso = "0.6"
 lalrpop-intern = "0.15"
 intaglio = "1.1"
 strena = { git = "https://github.com/CAD97/strena.git", rev = "1ddbf48b9f639ffbb4c89b0d51cb005fc0e3a4f7" }
-cargo = "0.45.1"
+cargo = "0.57"
 
 [dev-dependencies]
 criterion = "0.3"

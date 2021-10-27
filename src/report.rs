@@ -72,7 +72,7 @@ impl Report {
             }
         }
         Chart::new(120, 80, 0.0, points.len() as f32)
-            .lineplot(Shape::Steps(&points[..]))
+            .lineplot(&Shape::Steps(&points[..]))
             .nice();
 
         println!("     total events | {}", events.len());

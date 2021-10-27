@@ -12,8 +12,9 @@ Possible values for `<lib>` are:
 
 - `std`: Baseline, collecting into `Vec<String>`.
 - `interner`: Testing the [`string-interner`](https://crates.io/crates/string-interner) crate with default backend.
-    - `interner_bucket`: To use the `BucketBackend` of the `string-interner`. This is the default backend.
-    - `interner_string`: To use the `StringBackend` of the `string-interner` instead of the default backend.
+    - `interner_bucket`: To use the `BucketBackend` of the `string-interner` (default)
+    - `interner_string`: To use the `StringBackend` of the `string-interner`
+    - `interner_buffer`: To use the `BufferBackend` of the `string-interner`
 - `lasso`: Testing the [`lasso`](https://crates.io/crates/lasso) crate.
 - `larlpop`: Testing the [`lalrpop-intern`](https://crates.io/crates/lalrpop-intern) crate.
 - `intaglio`: Testing the [`intaglio`](https://crates.io/crates/intaglio) crate.
